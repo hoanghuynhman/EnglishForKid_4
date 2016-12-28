@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">English for Kids</string>
+    <string name="title_loading">Loading . . .</string>
 </resources>
