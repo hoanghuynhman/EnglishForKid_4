@@ -82,6 +82,7 @@ public class VideoDataController extends DatabaseManager {
         try {
             open();
             mDatabase.execSQL(String.format("delete from %s", DatabaseManager.TABLE_VIDEO));
+            mDatabase.execSQL(String.format("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '%s'",TABLE_VIDEO));
         } catch (SQLiteException e) {
             e.printStackTrace();
         } finally {
