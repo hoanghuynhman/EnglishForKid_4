@@ -37,9 +37,7 @@ public class JsoupPaser {
         List<VideoModel> listVideoBean = new ArrayList<>();
         VideoModel newItem;
         //select url depend on type SONG or SHORT STORY
-        String url = (type == SONG_TYPE ?
-                Constant.URL_ROOT + Constant.URL_SONGS :
-                Constant.URL_ROOT + Constant.URL_SHORT_STORIES);
+        String url = (type == SONG_TYPE ? Constant.URL_SONGS : Constant.URL_SHORT_STORIES);
         Document doc = Jsoup.connect(url).get();
         if (doc == null) return listVideoBean;
         Element blockSong = doc.select(Constant.DIV_BLOCK_CONTENT).first();

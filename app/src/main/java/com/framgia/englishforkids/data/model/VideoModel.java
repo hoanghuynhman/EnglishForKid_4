@@ -4,9 +4,6 @@ import android.database.Cursor;
 
 import com.framgia.englishforkids.util.DatabaseManager;
 
-import static android.R.attr.id;
-import static android.R.attr.name;
-
 /**
  * Created by GIAKHANH on 12/28/2016.
  */
@@ -40,6 +37,7 @@ public class VideoModel {
 
     public VideoModel(Cursor cursor) {
         mId = cursor.getInt(cursor.getColumnIndex(DatabaseManager.COLUMN_ID));
+        mName = cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_NAME));
         mImageUrl = cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_IMG_URL));
         mVideoAddress = cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_VIDEO_ADDRESS));
         mType = cursor.getInt(cursor.getColumnIndex(DatabaseManager.COLUMN_TYPE));
@@ -96,6 +94,6 @@ public class VideoModel {
 
     @Override
     public String toString() {
-        return id + " - " + name + " - " + mVideoAddress;
+        return mId + "- " + mName + " - " + mVideoAddress + " - " + mImageUrl;
     }
 }

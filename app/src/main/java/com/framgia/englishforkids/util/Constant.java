@@ -7,9 +7,8 @@ package com.framgia.englishforkids.util;
 public class Constant {
     public static final int SONG_TYPE = 0;
     public static final int STORY_TYPE = 1;
-    public static final String URL_ROOT = "https://learnenglishkids.britishcouncil.org";
-    public static final String URL_SONGS = "/en/songs/";
-    public static final String URL_SHORT_STORIES = "/en/short-stories/";
+    public static final String URL_SONGS = "https://learnenglishkids.britishcouncil.org/en/songs/";
+    public static final String URL_SHORT_STORIES = "https://learnenglishkids.britishcouncil.org/en/short-stories/";
     public static final String DIV_BLOCK_CONTENT = "div#block-views-magazine-glossary-block-1";
     public static final String DIV_VIEWS_ROW = "div.view-content>.views-row";
     public static final String IMG = "img";
