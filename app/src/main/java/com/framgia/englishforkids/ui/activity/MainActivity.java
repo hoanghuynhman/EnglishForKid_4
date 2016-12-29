@@ -12,7 +12,9 @@ import android.view.MenuItem;
 import com.framgia.englishforkids.R;
 import com.framgia.englishforkids.ui.adapter.ViewPagerAdapter;
 
-public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener, TabLayout.OnTabSelectedListener, Toolbar.OnMenuItemClickListener {
+public class MainActivity extends AppCompatActivity
+    implements ViewPager.OnPageChangeListener, TabLayout.OnTabSelectedListener,
+    Toolbar.OnMenuItemClickListener {
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -42,23 +44,18 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     private void setupTabLayout() {
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
-
         //creating adapter and setting that adapter to the viewPager
         mAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
-
         mTabSong = mTabLayout.newTab();
         mTabStory = mTabLayout.newTab();
-
         mTabSong.setIcon(R.drawable.ic_song);
         mTabStory.setIcon(R.drawable.ic_story);
-
         mTabLayout.addTab(mTabSong, 0);
         mTabLayout.addTab(mTabStory, 1);
-
         mTabLayout.setTabTextColors(ContextCompat.getColorStateList(this, R.color.color_white));
-        mTabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.color_yellow_dark));
-
+        mTabLayout
+            .setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.color_yellow_dark));
         //view pager setting
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mViewPager.addOnPageChangeListener(this);
@@ -74,12 +71,12 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     private void changeStyle() {
-        //Todo: Change Style
+        mAdapter.changeViewMode();
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
     }
 
     @Override
@@ -100,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
     }
 
     @Override
@@ -110,12 +106,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     public void onTabUnselected(TabLayout.Tab tab) {
-
     }
 
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
-
     }
-
 }

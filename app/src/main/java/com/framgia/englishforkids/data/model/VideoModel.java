@@ -7,7 +7,6 @@ import com.framgia.englishforkids.util.DatabaseManager;
 /**
  * Created by GIAKHANH on 12/28/2016.
  */
-
 public class VideoModel {
     private int mId;
     private String mName;
@@ -26,7 +25,8 @@ public class VideoModel {
         mType = type;
     }
 
-    public VideoModel(int id, String name, String imageUrl, String videoAddress, String videoUrl, int type) {
+    public VideoModel(int id, String name, String imageUrl, String videoAddress, String videoUrl,
+                      int type) {
         mId = id;
         mName = name;
         mImageUrl = imageUrl;
@@ -39,7 +39,8 @@ public class VideoModel {
         mId = cursor.getInt(cursor.getColumnIndex(DatabaseManager.COLUMN_ID));
         mName = cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_NAME));
         mImageUrl = cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_IMG_URL));
-        mVideoAddress = cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_VIDEO_ADDRESS));
+        mVideoAddress =
+            cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_VIDEO_ADDRESS));
         mType = cursor.getInt(cursor.getColumnIndex(DatabaseManager.COLUMN_TYPE));
         mVideoUrl = cursor.getString(cursor.getColumnIndex(DatabaseManager.COLUMN_VIDEO_URL));
     }
