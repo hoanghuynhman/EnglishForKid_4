@@ -37,4 +37,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             videosFragment.changeViewMode();
         }
     }
+
+    public void search(String searchString) {
+        for (VideosFragment videosFragment : mListFragment) {
+            videosFragment.search(searchString);
+        }
+    }
 }

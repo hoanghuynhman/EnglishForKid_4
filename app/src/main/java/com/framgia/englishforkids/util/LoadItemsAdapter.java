@@ -48,6 +48,11 @@ public class LoadItemsAdapter extends RecyclerView.Adapter<LoadItemsAdapter.View
         return mListVideoModel != null ? mListVideoModel.size() : 0;
     }
 
+    public void updateData(List<VideoModel> listVideoModel) {
+        mListVideoModel = listVideoModel;
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mImageView;
         private TextView mTextView;

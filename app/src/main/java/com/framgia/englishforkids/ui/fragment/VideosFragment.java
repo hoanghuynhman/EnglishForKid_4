@@ -14,6 +14,7 @@ import com.framgia.englishforkids.data.model.VideoModel;
 import com.framgia.englishforkids.util.LoadItemsAdapter;
 import com.framgia.englishforkids.util.ViewMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class VideosFragment extends Fragment {
@@ -68,8 +69,16 @@ public class VideosFragment extends Fragment {
         mLayoutManager = new GridLayoutManager(getActivity(),
             mMode == ViewMode.LIST ? 1 : mNumberOfColumnsGrid);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new LoadItemsAdapter(getActivity(), mListVideoModel,
-            mMode);
+        mAdapter = new LoadItemsAdapter(getActivity(), mListVideoModel, mMode);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    public void search(String searchString) {
+        List<VideoModel> filteredList = new ArrayList<VideoModel>();
+        for (VideoModel videoModel : mListVideoModel) {
+            if (videoModel.getName().toLowerCase().contains(searchString))
+                filteredList.add(videoModel);
+        }
+        ((LoadItemsAdapter)mAdapter).updateData(filteredList);
     }
 }
