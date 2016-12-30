@@ -15,7 +15,6 @@ import java.util.List;
 /**
  * Created by GIAKHANH on 12/28/2016.
  */
-
 public class VideoDataController extends DatabaseManager {
     private SQLiteDatabase mDatabase;
 
@@ -45,7 +44,9 @@ public class VideoDataController extends DatabaseManager {
             open();
             VideoModel newVideo;
             Cursor cursor;
-            cursor = mDatabase.query(DatabaseManager.TABLE_VIDEO, null, COLUMN_TYPE + " = " + type, null, null, null, null);
+            cursor = mDatabase
+                .query(DatabaseManager.TABLE_VIDEO, null, COLUMN_TYPE + " = " + type, null, null,
+                    null, null);
             if (cursor != null && cursor.moveToFirst()) {
                 while (!cursor.isAfterLast()) {
                     newVideo = new VideoModel(cursor);
@@ -68,7 +69,9 @@ public class VideoDataController extends DatabaseManager {
             open();
             ContentValues values = new ContentValues();
             values.put(DatabaseManager.COLUMN_VIDEO_URL, newVideo.getVideoUrl());
-            return mDatabase.update(DatabaseManager.TABLE_VIDEO, values, COLUMN_ID + " = " + newVideo.getId(), null) != 0;
+            return mDatabase
+                .update(DatabaseManager.TABLE_VIDEO, values, COLUMN_ID + " = " + newVideo.getId(),
+                    null) != 0;
         } catch (SQLiteException e) {
             e.printStackTrace();
         } finally {
@@ -82,7 +85,8 @@ public class VideoDataController extends DatabaseManager {
         try {
             open();
             mDatabase.execSQL(String.format("delete from %s", DatabaseManager.TABLE_VIDEO));
-            mDatabase.execSQL(String.format("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '%s'",TABLE_VIDEO));
+            mDatabase.execSQL(
+                String.format("DELETE FROM SQLITE_SEQUENCE WHERE NAME = '%s'", TABLE_VIDEO));
         } catch (SQLiteException e) {
             e.printStackTrace();
         } finally {

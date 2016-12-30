@@ -15,11 +15,9 @@ import java.util.List;
 
 import static com.framgia.englishforkids.util.Constant.SONG_TYPE;
 
-
 /**
  * Created by GIAKHANH on 12/28/2016.
  */
-
 public class JsoupPaser {
     public static JsoupPaser sInstance;
 
