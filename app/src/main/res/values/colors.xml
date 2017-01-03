@@ -8,4 +8,6 @@
     <color name="color_yellow">#fea200</color>
     <color name="color_yellow_dark">#df4600</color>
     <color name="color_item_background">#fde5b5</color>
+    <color name="color_item_border">#fac366</color>
+    <color name="color_background">#ffedd5</color>
 </resources>
