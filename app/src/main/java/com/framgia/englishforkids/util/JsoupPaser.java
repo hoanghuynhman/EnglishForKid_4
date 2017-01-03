@@ -66,4 +66,11 @@ public class JsoupPaser {
     public List<VideoModel> paserSories() throws IOException {
         return paser(Constant.STORY_TYPE);
     }
+
+    public String paserVideoId(String urlVideo) throws IOException {
+        Document doc = Jsoup.connect(urlVideo).get();
+        if (doc == null) return null;
+        Element blockVideo = doc.select(Constant.DIV_BLOCK_VIDEO).first();
+        return blockVideo.attr(Constant.VIDEO_ATTR);
+    }
 }

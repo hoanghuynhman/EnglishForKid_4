@@ -4,10 +4,12 @@ import android.database.Cursor;
 
 import com.framgia.englishforkids.util.DatabaseManager;
 
+import java.io.Serializable;
+
 /**
  * Created by GIAKHANH on 12/28/2016.
  */
-public class VideoModel {
+public class VideoModel implements Serializable{
     private int mId;
     private String mName;
     private String mImageUrl;

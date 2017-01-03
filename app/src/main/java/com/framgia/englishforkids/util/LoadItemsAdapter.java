@@ -1,17 +1,21 @@
 package com.framgia.englishforkids.util;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.framgia.englishforkids.R;
 import com.framgia.englishforkids.data.model.VideoModel;
+import com.framgia.englishforkids.ui.activity.DisplayVideoActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -56,6 +60,7 @@ public class LoadItemsAdapter extends RecyclerView.Adapter<LoadItemsAdapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView mImageView;
         private TextView mTextView;
+        private VideoModel mVideoModel;
 
         public ViewHolder(View view) {
             super(view);
@@ -66,6 +71,7 @@ public class LoadItemsAdapter extends RecyclerView.Adapter<LoadItemsAdapter.View
 
         public void bindData(VideoModel videoModel) {
             if (videoModel == null) return;
+            mVideoModel = videoModel;
             Picasso.with(mImageView.getContext()).load(videoModel.getImageUrl())
                 .into(mImageView);
             mTextView.setText(videoModel.getName());
@@ -74,6 +80,44 @@ public class LoadItemsAdapter extends RecyclerView.Adapter<LoadItemsAdapter.View
         @Override
         public void onClick(View view) {
             // TODO: enter view video activity
+            new ParseUrlVideo(view.getContext())
+                .execute(mVideoModel.getVideoAddress());
+        }
+
+        private void startDisplayActivity(Context context, String video_url) {
+            mVideoModel.setVideoUrl(video_url);
+            context.startActivity(DisplayVideoActivity.getDisplayVideoIntent(context, mVideoModel));
+        }
+
+        public class ParseUrlVideo extends AsyncTask<String, Void, String> {
+            private Context mContext;
+
+            public ParseUrlVideo(Context context) {
+                mContext = context;
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+                String videoUrl = null;
+                try {
+                    videoUrl = JsoupPaser.getInstance().paserVideoId(strings[0]);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return videoUrl;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                if (s != null) {
+                    startDisplayActivity(mContext, s);
+                } else {
+                    Toast.makeText(mContext, mContext.getResources().getString(R.string.warning),
+                        Toast
+                            .LENGTH_LONG).show();
+                }
+            }
         }
     }
 }
