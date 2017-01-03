@@ -6,13 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    card_view:cardCornerRadius="@dimen/cardview_radius">
+    card_view:cardCornerRadius="@dimen/cardview_radius"
+    card_view:cardPreventCornerOverlap="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_item_background"
-        android:orientation="horizontal">
+        android:background="@drawable/bg_card_item"
+        android:orientation="horizontal"
+        android:padding="@dimen/cardview_border">
 
         <ImageView
             android:id="@+id/image_item"
