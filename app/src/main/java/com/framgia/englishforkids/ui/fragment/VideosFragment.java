@@ -19,7 +19,9 @@ import java.util.List;
 
 public class VideosFragment extends Fragment {
     private static final String ARG_CATEGORY = "Category";
-    private int mCategory;
+    private static final String ARG_NUMBER_OF_RANDOM_VIDEOS = "Number";
+    private int mCategoryId;
+    private int mNumberOfRandomVideos;
     private VideoDataController mDataSource;
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -36,11 +38,20 @@ public class VideosFragment extends Fragment {
         return fragment;
     }
 
+    public static VideosFragment newInstanceRandomVideos(int numberOfRandomVideos) {
+        VideosFragment fragment = new VideosFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_NUMBER_OF_RANDOM_VIDEOS, numberOfRandomVideos);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mCategory = getArguments().getInt(ARG_CATEGORY);
+            mCategoryId = getArguments().getInt(ARG_CATEGORY);
+            mNumberOfRandomVideos = getArguments().getInt(ARG_NUMBER_OF_RANDOM_VIDEOS);
         }
     }
 
@@ -54,13 +65,19 @@ public class VideosFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstance) {
         super.onActivityCreated(savedInstance);
         mDataSource = new VideoDataController(getActivity());
-        mListVideoModel = mDataSource.getVideoDataFromDatabase(mCategory);
-        mNumberOfColumnsGrid = getResources().getInteger(R.integer.grid_number_of_columns);
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new GridLayoutManager(getActivity(), mNumberOfColumnsGrid);
+        if (mCategoryId != 0) {
+            mListVideoModel = mDataSource.getVideoDataFromDatabase(mCategoryId);
+            mNumberOfColumnsGrid = getResources().getInteger(R.integer.grid_number_of_columns);
+            mLayoutManager = new GridLayoutManager(getActivity(), mNumberOfColumnsGrid);
+            mAdapter = new LoadItemsAdapter(getActivity(), mListVideoModel, ViewMode.GRID);
+        } else if (mNumberOfRandomVideos != 0) {
+            mListVideoModel = mDataSource.getRandomVideos(mNumberOfRandomVideos);
+            mLayoutManager = new GridLayoutManager(getActivity(), 1);
+            mAdapter = new LoadItemsAdapter(getActivity(), mListVideoModel, ViewMode.LIST);
+        }
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new LoadItemsAdapter(getActivity(), mListVideoModel, ViewMode.GRID);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -79,6 +96,6 @@ public class VideosFragment extends Fragment {
             if (videoModel.getName().toLowerCase().contains(searchString))
                 filteredList.add(videoModel);
         }
-        ((LoadItemsAdapter)mAdapter).updateData(filteredList);
+        ((LoadItemsAdapter) mAdapter).updateData(filteredList);
     }
 }

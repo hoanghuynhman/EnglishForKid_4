@@ -63,6 +63,31 @@ public class VideoDataController extends DatabaseManager {
         return listVideo;
     }
 
+    public List<VideoModel> getRandomVideos(int numberOfVideos) {
+        List<VideoModel> listVideo = new ArrayList<>();
+        try {
+            open();
+            VideoModel newVideo;
+            Cursor cursor;
+            cursor = mDatabase
+                .query(DatabaseManager.TABLE_VIDEO, null, null, null, null, null, "RANDOM()",
+                    numberOfVideos + "");
+            if (cursor != null && cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+                    newVideo = new VideoModel(cursor);
+                    listVideo.add(newVideo);
+                    cursor.moveToNext();
+                }
+            }
+            cursor.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return listVideo;
+    }
+
     //update video data
     public boolean updateVideo(VideoModel newVideo) {
         try {
