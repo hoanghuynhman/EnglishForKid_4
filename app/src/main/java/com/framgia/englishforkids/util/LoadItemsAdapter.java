@@ -61,8 +61,7 @@ public class LoadItemsAdapter extends RecyclerView.Adapter<LoadItemsAdapter.View
             super(view);
             mImageView = (ImageView) view.findViewById(R.id.image_item);
             mTextView = (TextView) view.findViewById(R.id.text_item);
-            mImageView.setOnClickListener(this);
-            mTextView.setOnClickListener(this);
+            view.setOnClickListener(this);
         }
 
         public void bindData(VideoModel videoModel) {
