@@ -1,8 +1,14 @@
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/recycler_view"
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/swipe_refresh"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
-    tools:context="com.framgia.englishforkids.ui.fragment.VideosFragment"/>
+    tools:context="com.framgia.englishforkids.ui.fragment.VideosFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_background"/>
+</android.support.v4.widget.SwipeRefreshLayout>
