@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         mViewPager.setAdapter(mAdapter);
         mTabSong = mTabLayout.newTab();
         mTabStory = mTabLayout.newTab();
-        mTabSong.setIcon(R.drawable.ic_song);
+        mTabSong.setIcon(R.drawable.ic_song_selected);
         mTabStory.setIcon(R.drawable.ic_story);
         mTabLayout.addTab(mTabSong, 0);
         mTabLayout.addTab(mTabStory, 1);

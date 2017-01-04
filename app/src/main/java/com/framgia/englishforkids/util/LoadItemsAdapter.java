@@ -1,5 +1,6 @@
 package com.framgia.englishforkids.util;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
@@ -80,7 +81,7 @@ public class LoadItemsAdapter extends RecyclerView.Adapter<LoadItemsAdapter.View
         @Override
         public void onClick(View view) {
             // TODO: enter view video activity
-            new ParseUrlVideo(view.getContext())
+            new ParseUrlVideoAsync(view.getContext())
                 .execute(mVideoModel.getVideoAddress());
         }
 
@@ -89,11 +90,25 @@ public class LoadItemsAdapter extends RecyclerView.Adapter<LoadItemsAdapter.View
             context.startActivity(DisplayVideoActivity.getDisplayVideoIntent(context, mVideoModel));
         }
 
-        public class ParseUrlVideo extends AsyncTask<String, Void, String> {
+        public class ParseUrlVideoAsync extends AsyncTask<String, Void, String> {
             private Context mContext;
+            private ProgressDialog mProgressDialog;
 
-            public ParseUrlVideo(Context context) {
+            public ParseUrlVideoAsync(Context context) {
                 mContext = context;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                mProgressDialog = new ProgressDialog(mContext, R.style.CustomDialogTheme);
+                mProgressDialog.setTitle(mContext.getResources().getString(R.string.title_wait));
+                mProgressDialog
+                    .setMessage(mContext.getResources().getString(R.string.title_loading));
+                mProgressDialog.setIndeterminate(false);
+                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                mProgressDialog.setCancelable(true);
+                mProgressDialog.show();
             }
 
             @Override
@@ -110,12 +125,11 @@ public class LoadItemsAdapter extends RecyclerView.Adapter<LoadItemsAdapter.View
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                if (s != null) {
-                    startDisplayActivity(mContext, s);
-                } else {
+                mProgressDialog.dismiss();
+                if (s != null) startDisplayActivity(mContext, s);
+                else {
                     Toast.makeText(mContext, mContext.getResources().getString(R.string.warning),
-                        Toast
-                            .LENGTH_LONG).show();
+                        Toast.LENGTH_LONG).show();
                 }
             }
         }

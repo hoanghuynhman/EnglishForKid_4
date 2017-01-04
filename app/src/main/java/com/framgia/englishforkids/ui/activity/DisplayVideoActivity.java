@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -25,6 +27,7 @@ import android.widget.VideoView;
 import com.framgia.englishforkids.R;
 import com.framgia.englishforkids.data.model.VideoDataController;
 import com.framgia.englishforkids.data.model.VideoModel;
+import com.framgia.englishforkids.ui.fragment.VideosFragment;
 import com.framgia.englishforkids.util.Constant;
 import com.framgia.englishforkids.util.Convert;
 
@@ -43,6 +46,7 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
     private VideoDataController mVideoDataController;
     private VideoModel mVideoModel;
     private String mVideoUrl;
+    private RelativeLayout mRlSuggestVideo;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +124,8 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
         mImgvStatus.setOnClickListener(this);
         mImgvFullScreen.setOnClickListener(this);
         setupToolBar();
+        mRlSuggestVideo = (RelativeLayout) findViewById(R.id.relative_suggest_video);
+        initSuggestVideoLayout();
     }
 
     private void initVideo() {
@@ -161,6 +167,7 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
 
     private void setFullScreen() {
         mToolbar.setVisibility(View.GONE);
+        mRlSuggestVideo.setVisibility(View.GONE);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mVideoView.getLayoutParams();
@@ -173,6 +180,7 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
 
     private void setToDefaultLayout() {
         mToolbar.setVisibility(View.VISIBLE);
+        mRlSuggestVideo.setVisibility(View.VISIBLE);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mVideoView.getLayoutParams();
@@ -262,6 +270,16 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
         TextView title = (TextView) findViewById(R.id.tv_title);
         title.setText(mVideoModel.getName());
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void initSuggestVideoLayout() {
+        VideosFragment videosFragment = VideosFragment.newInstanceRandomVideos(Constant
+            .NUMBER_OF_RANDOM_VIDEOS);
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction()
+            .replace(R.id.relative_suggest_video, videosFragment,
+                videosFragment.getTag())
+            .commit();
     }
 }
 

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="grid_number_of_columns">3</integer>
+    <item name="alpha" type="integer" format="float">0.9</item>
 </resources>
