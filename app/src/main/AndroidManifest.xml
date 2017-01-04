@@ -13,11 +13,22 @@
         <activity
             android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|screenSize"/>
+
         <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.DisplayVideoActivity"
+            android:configChanges="screenSize|orientation"
+            android:theme="@style/FullScreenTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activity.MainActivity"
+                />
         </activity>
     </application>
 

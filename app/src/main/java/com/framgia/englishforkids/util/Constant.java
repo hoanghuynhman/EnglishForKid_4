@@ -15,4 +15,10 @@ public class Constant {
     public static final String IMG = "img";
     public static final String SRC = "src";
     public static final String HREF_ATTRIB = "abs:href";
+    public static final String URL_VIDEO = "http://www.viddler.com/file/%s/html5";
+    public static final int DELAY_TIME = 200;
+    public static final String DIV_BLOCK_VIDEO = ".viddler-auto-embed";
+    public static final String VIDEO_ATTR = "data-video-id";
+    public static final String VIDEO_DATA ="VIDEO_DATA";
+    public static final String BUNDLE_DATA = "BUNDLE_DATA";
 }
