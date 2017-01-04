@@ -12,4 +12,22 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
+    <style name="CustomDialogTheme" parent="@android:style/Theme.Dialog">
+        <item name="android:alertDialogStyle">@style/CustomAlertDialogStyle</item>
+        <item name="android:textColorPrimary">@color/color_item_border</item>
+    </style>
+
+    <style name="CustomAlertDialogStyle">
+        <item name="android:bottomBright">@color/color_yellow</item>
+        <item name="android:bottomDark">@color/color_yellow</item>
+        <item name="android:bottomMedium">@color/color_yellow</item>
+        <item name="android:centerBright">@color/color_yellow</item>
+        <item name="android:centerDark">@color/color_yellow</item>
+        <item name="android:centerMedium">@color/color_yellow</item>
+        <item name="android:fullBright">@color/color_yellow</item>
+        <item name="android:fullDark">@color/color_yellow</item>
+        <item name="android:topBright">@color/color_yellow</item>
+        <item name="android:topDark">@color/color_yellow</item>
+    </style>
 </resources>

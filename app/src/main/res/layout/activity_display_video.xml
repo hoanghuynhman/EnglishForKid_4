@@ -27,4 +27,9 @@
             <include layout="@layout/partilar_controls_bar"/>
         </LinearLayout>
     </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_suggest_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
