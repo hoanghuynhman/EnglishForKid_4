@@ -78,6 +78,7 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
         initPosition();
         initViews();
         initVideo();
+        checkOrientation();
     }
 
     private void getData() {
@@ -162,11 +163,7 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setFullScreen();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setToDefaultLayout();
-        }
+        checkOrientation();
     }
 
     private void setFullScreen() {
@@ -298,6 +295,15 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setCancelable(true);
         mProgressDialog.show();
+    }
+
+    public void checkOrientation() {
+        if (this.getResources().getConfiguration().orientation ==
+            Configuration.ORIENTATION_LANDSCAPE) {
+            setFullScreen();
+        } else {
+            setToDefaultLayout();
+        }
     }
 }
 
