@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="activity_horizontal_margin">6.00dp</dimen>
+	<dimen name="activity_vertical_margin">24.00dp</dimen>
+	<dimen name="cardview_border">3.00dp</dimen>
+	<dimen name="cardview_radius">6.00dp</dimen>
+	<dimen name="dp_17">25.50dp</dimen>
+	<dimen name="dp_30">45.00dp</dimen>
+	<dimen name="dp_300">450.00dp</dimen>
+	<dimen name="image_height">150.00dp</dimen>
+	<dimen name="image_width">195.00dp</dimen>
+	<dimen name="item_text_padding_grid">7.50dp</dimen>
+	<dimen name="item_text_padding_list">22.50dp</dimen>
+	<dimen name="text_min_height">90.00dp</dimen>
+	<dimen name="item_text_size_grid">19.50sp</dimen>
+	<dimen name="item_text_size_list">30.00sp</dimen>
+	<dimen name="sp_20">30.00sp</dimen>
+	<dimen name="sp_30">45.00sp</dimen>
+	<dimen name="sp_40">60.00sp</dimen>
+</resources>
