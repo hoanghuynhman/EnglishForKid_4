@@ -23,8 +23,7 @@
         </activity>
         <activity
             android:name=".ui.activity.DisplayVideoActivity"
-            android:configChanges="screenSize|orientation"
-            android:theme="@style/FullScreenTheme">
+            android:configChanges="screenSize|orientation">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.MainActivity"

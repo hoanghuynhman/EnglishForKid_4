@@ -1,5 +1,6 @@
 package com.framgia.englishforkids.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +35,7 @@ import com.framgia.englishforkids.util.Convert;
 
 public class DisplayVideoActivity extends AppCompatActivity implements View.OnTouchListener, SeekBar
     .OnSeekBarChangeListener, View.OnClickListener {
+    private static final String PREF_POSITION = "PREF_POSITION";
     private Toolbar mToolbar;
     private VideoView mVideoView;
     private LinearLayout mLLStatus;
@@ -42,11 +45,31 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
     private TextView mTvTime;
     private boolean mIsFullScreen;
     private Handler mHandler = new Handler();
-    private static final String PREF_POSITION = "PREF_POSITION";
     private VideoDataController mVideoDataController;
     private VideoModel mVideoModel;
     private String mVideoUrl;
     private RelativeLayout mRlSuggestVideo;
+    private ProgressDialog mProgressDialog;
+    private Runnable mUpdateSeekBarTask = new Runnable() {
+        @Override
+        public void run() {
+            if (!mVideoView.isPlaying()) return;
+            mTvTime.setText(
+                Convert.convertTime(mVideoView.getCurrentPosition() / 1000) + "/" +
+                    Convert.convertTime
+                        (mVideoView.getDuration() / 1000));
+            mSeekBar.setProgress(mVideoView.getCurrentPosition());
+            mHandler.postDelayed(this, Constant.DELAY_TIME);
+        }
+    };
+
+    public static Intent getDisplayVideoIntent(Context context, VideoModel videoModel) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constant.VIDEO_DATA, videoModel);
+        Intent intent = new Intent(context, DisplayVideoActivity.class);
+        intent.putExtra(Constant.BUNDLE_DATA, bundle);
+        return intent;
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,14 +78,6 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
         initPosition();
         initViews();
         initVideo();
-    }
-
-    public static Intent getDisplayVideoIntent(Context context, VideoModel videoModel) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constant.VIDEO_DATA, videoModel);
-        Intent intent = new Intent(context, DisplayVideoActivity.class);
-        intent.putExtra(Constant.BUNDLE_DATA, bundle);
-        return intent;
     }
 
     private void getData() {
@@ -106,6 +121,7 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
                 setupSeekBar();
                 mVideoView.seekTo(position);
                 updateSeekBar();
+                mProgressDialog.dismiss();
                 mVideoView.pause();
             }
         });
@@ -126,6 +142,7 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
         setupToolBar();
         mRlSuggestVideo = (RelativeLayout) findViewById(R.id.relative_suggest_video);
         initSuggestVideoLayout();
+        initProgressDialog();
     }
 
     private void initVideo() {
@@ -137,19 +154,6 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
         mSeekBar.setMax(mVideoView.getDuration());
         mSeekBar.setProgress(0);
     }
-
-    private Runnable mUpdateSeekBarTask = new Runnable() {
-        @Override
-        public void run() {
-            if (!mVideoView.isPlaying()) return;
-            mTvTime.setText(
-                Convert.convertTime(mVideoView.getCurrentPosition() / 1000) + "/" +
-                    Convert.convertTime
-                        (mVideoView.getDuration() / 1000));
-            mSeekBar.setProgress(mVideoView.getCurrentPosition());
-            mHandler.postDelayed(this, Constant.DELAY_TIME);
-        }
-    };
 
     private void updateSeekBar() {
         mHandler.postDelayed(mUpdateSeekBarTask, Constant.DELAY_TIME);
@@ -166,6 +170,8 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
     }
 
     private void setFullScreen() {
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mToolbar.setVisibility(View.GONE);
         mRlSuggestVideo.setVisibility(View.GONE);
         DisplayMetrics metrics = new DisplayMetrics();
@@ -179,6 +185,7 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
     }
 
     private void setToDefaultLayout() {
+        this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mToolbar.setVisibility(View.VISIBLE);
         mRlSuggestVideo.setVisibility(View.VISIBLE);
         DisplayMetrics metrics = new DisplayMetrics();
@@ -280,6 +287,17 @@ public class DisplayVideoActivity extends AppCompatActivity implements View.OnTo
             .replace(R.id.relative_suggest_video, videosFragment,
                 videosFragment.getTag())
             .commit();
+    }
+
+    private void initProgressDialog() {
+        mProgressDialog = new ProgressDialog(this, R.style.CustomDialogTheme);
+        mProgressDialog.setTitle(this.getResources().getString(R.string.title_wait));
+        mProgressDialog
+            .setMessage(this.getResources().getString(R.string.title_loading));
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(true);
+        mProgressDialog.show();
     }
 }
 
